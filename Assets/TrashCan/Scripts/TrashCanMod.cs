@@ -1,8 +1,11 @@
+using HarmonyLib;
 using PugMod;
+using Unity.Entities;
 using UnityEngine;
 
 namespace TrashCan.Scripts
 {
+    [Harmony]
     public class TrashCanMod : IMod
     {
         // ReSharper disable once MemberCanBePrivate.Global
@@ -43,6 +46,22 @@ namespace TrashCan.Scripts
 
         public void Update()
         {
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(TrashCanInventoryUI), "TrashItemInSlot")]
+        public static void TrashCanInventoryUI_TrashItemInSlot_Patch()
+        {
+            var player = Manager.main.player;
+            if (player == null)
+            {
+                return;
+            }
+
+            var inventoryHandler = player.trashCanHandler.inventoryHandler;
+            var objectData = inventoryHandler.GetObjectData(0);
+
+            if (objectData.objectID != ObjectID.InventoryChest) return;
+            API.Server.DropObject((int)API.Authoring.GetObjectID("TrashCan:TrashCan"), 0, objectData.amount, player.WorldPosition);
         }
     }
 }

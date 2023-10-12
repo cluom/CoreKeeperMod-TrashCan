@@ -1,5 +1,6 @@
-﻿{
+{
     "name": "TrashCan",
+    "rootNamespace": "",
     "references": [
         "Unity.Burst",
         "Unity.Collections",
@@ -83,10 +84,11 @@
         "System.Numerics.Vectors.dll",
         "System.Runtime.CompilerServices.Unsafe.dll",
         "System.Text.Json.dll",
-        "ZipSaveFolder.dll"
+        "ZipSaveFolder.dll",
+        "0Harmony.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
-    "useGUIDs": false
+    "noEngineReferences": false
 }
